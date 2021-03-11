@@ -1,0 +1,10 @@
+---
+
+- hosts: partick_till1
+  become: true
+  tasks:
+
+  - name: install apache2 package
+    apt:
+      name: apache2
+      state: present
