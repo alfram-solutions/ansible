@@ -12,3 +12,11 @@
       state: latest
       update_cache: yes
 
+  - name: copy nginx conf file for server
+    tags: nginx
+    copy:
+            src: nginx.conf.new
+            dest: /etc/nginx/nginx.conf.new
+            owner: root
+            group: root
+            mode: 0644
