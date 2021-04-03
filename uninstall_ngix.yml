@@ -1,10 +1,11 @@
 ---
 
-- hosts: localhost
+- hosts: web_servers 
   become: true
   tasks:
 
   - name: uninstall nginx
+    tags: nginx,ubuntu
     package:
       name: 
         - "{{ nginx_package }}"

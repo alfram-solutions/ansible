@@ -1,0 +1,10 @@
+---
+
+- hosts: file_servers
+  become: true
+  tasks:
+          - name: uninstall samba package
+            tags: samba,ubuntu
+            package:
+                    name: samba
+                    state: absent

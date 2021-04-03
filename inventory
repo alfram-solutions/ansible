@@ -4,3 +4,10 @@ partick_till1
 
 [web_servers]
 localhost ansible_connection=local  nginx_package=nginx
+
+[tills]
+partick_till1
+pollok_till1
+
+[file_servers]
+localhost ansible_connection=local
