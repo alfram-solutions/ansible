@@ -1,0 +1,13 @@
+---
+
+- hosts: localhost
+  become: true
+  tasks:
+
+  - name: uninstall nginx
+    package:
+      name: 
+        - "{{ nginx_package }}"
+      state: absent
+      update_cache: yes
+

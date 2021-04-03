@@ -3,4 +3,4 @@ pollokserver
 partick_till1
 
 [web_servers]
-localhost apache_package=apache2 php_package=libapache2-mod-php
+localhost ansible_connection=local  nginx_package=nginx
