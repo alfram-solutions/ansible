@@ -2,18 +2,5 @@
 
 - hosts: db_servers
   become: true
-  tasks:
-
-          - name: install mariadb package (Fedora)
-	    tags: fedora,db,mariadb
-            dnf:
-                    name: mariadb
-                    state: latest
-            when: ansible_distribution == "Fedora"
-
-          - name: install mariadb package (Ubuntu)
-	    tags: ubuntu,db,mariadb
-            apt:
-                    name: mariadb-server
-                    state: latest
-            when: ansible_distribution == "Ubuntu"
+  roles:
+	- db_servers

@@ -1,0 +1,38 @@
+- name: install nginx
+  tags: nginx,ubuntu
+  package:
+        name: "{{ nginx_package }}"
+        state: latest
+        update_cache: yes
+
+- name: start nginx 
+  tags: nginx
+  service:
+        name: nginx
+        state: started
+
+- name: copy default index html to server
+  tags: nginx
+  copy: 
+        src: default_sites.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: 0644
+
+- name: copy nginx conf file for server
+  tags: nginx
+  copy:
+        src: nginx.conf.new
+        dest: /etc/nginx/nginx.conf.new
+        owner: root
+        group: root
+        mode: 0644
+  register: nginx
+
+- name: restart ngix
+  tags: nginx
+  service:
+        name: nginx
+        state: restarted
+  when: nginx.changed
