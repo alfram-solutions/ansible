@@ -1,7 +1,8 @@
 - name: install nginx
   tags: nginx,ubuntu
   package:
-        name: "{{ nginx_package }}"
+        name: 
+                - "{{ nginx_package }}"
         state: latest
         update_cache: yes
 
@@ -28,11 +29,5 @@
         owner: root
         group: root
         mode: 0644
-  register: nginx
+  notify: restart_nginx
 
-- name: restart ngix
-  tags: nginx
-  service:
-        name: nginx
-        state: restarted
-  when: nginx.changed
