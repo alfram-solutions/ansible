@@ -35,3 +35,11 @@
             owner: root
             group: root
             mode: 0644
+    register: nginx
+
+  - name: restart ngix
+    tags: nginx
+    service:
+            name: nginx
+            state: restarted
+    when: nginx.changed
