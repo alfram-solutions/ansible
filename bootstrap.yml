@@ -1,0 +1,51 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates (Ubuntu)
+    tags: always
+    apt:
+            upgrade: dist
+            update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install updates (Fedora)
+    tags: always
+    dnf:
+            update_only: yes
+            update_cache: yes
+    when: ansible_distribution == "Fedora"
+
+
+    #  - name: install updates (openSUSE)
+    #    zypper:
+    #            update_cache: yes
+    #            name: "*"
+    #            state: latest
+    #    when: ansible_distribution == "openSUSE Tumbleweed"
+
+  - hosts: all
+  become: true
+  tasks:
+          - name: create simone user
+            tags: always
+            user:
+                    name: simone
+                    group: users
+
+          - name: add ssh key for simone
+            tags: always
+            authorized_key:
+                    user: simone
+                    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDZrXasjmZzkfAnLlfJuXPwBpn8Q2rsjQnhr8XDLjNBS5IZZhL0xEzpWf7NYibOsKTFJpIiFuPxNYTXGAG3EPgS3qxe7OknN5RaEnCARP0q6E1spZTgy6HDqJtnBphnlxGYnxaItSLcSRxe+e4k0enGJ+ddXOcDa8Pq4VVwZ6WNfedac9jcrAVhBEhtousEL94tLNfCurPNSWDwtcqM9x/+9btzfNbOXKHfE/GN3pCbBwYZcAGRA15nV9HCAlhCiw8E7ts3yenctbMQkbhbB90+/f5R65Wi+uN954kfaQYk6f2YTkzVgXviFT7hNPB1OMfnifvQXYRIiLGpqb1PYScWleaU4a3y3+kZgpXJ99/Yrc/MUg3mIW5YguIQzvVazq9Hprs1nZrEbg+jJD+sWDHwJuszgKr+pHfueVE1MBswm2sAiogamvGdrCD28ss1SnrP/q66HDf4mB+CHFtEadJYxGKsZBUkv5x/GR+8GtBTO4E8d140aLNOFEyrANKyoJ0OTv1l7vZidyNJUWghrKqMcH0gkekMN+d4+p938sCxC+N5gXjvvApk7Oa5WuWQbi4WM/CAgQUTlqIYhsbqVPPR6f6n8yTd8ZZi/zxOkhZTPJTfYq589eN8vONc9ATdsSikQtE6JsqFzWJBMHVMUe2gvXoLBi0BUEUx4AQYtNg/LQ== jaskooner@alframsolutions.com"
+
+          - name: add sudoers file for simone
+            tags: always
+            copy:
+                    src: sudoer_simone
+                    dest: /etc/sudoers.d/simone
+                    owner: root
+                    group: root
+                    mode: 0440

@@ -4,23 +4,18 @@
   become: true
   pre_tasks:
 
-  - name: install updates (Ubuntu)
+  - name: install repo cache (Ubuntu)
     tags: always
     apt:
-            upgrade: dist
             update_cache: yes
+    changed_when: false
     when: ansible_distribution == "Ubuntu"
 
-  - name: install updates (Fedora)
+  - name: update repo cache (Fedora)
     tags: always
     dnf:
-            update_only: yes
             update_cache: yes
+    changed_when: false
     when: ansible_distribution == "Fedora"
 
-    #  - name: install updates (openSUSE)
-    #    zypper:
-    #            update_cache: yes
-    #            name: "*"
-    #            state: latest
-    #    when: ansible_distribution == "openSUSE Tumbleweed"
+
